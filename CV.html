@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lebenslauf - Shahim Quraishy</title>
+    <style>
+        /* Grundlegendes Design */
+        :root {
+            --primary-bg: #1e3a5f; /* Dunkelblau für die Seitenleiste */
+            --primary-text: #ffffff;
+            --secondary-bg: #f8fafc; /* Helles Grau für den Hintergrund */
+            --accent-color: #3b82f6; /* Helles Blau für Highlights */
+            --text-dark: #334155;
+            --text-light: #64748b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-dark);
+        }
+
+        /* Hauptcontainer: Zweispaltiges Layout (Flexbox) */
+        .resume-container {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* LINKE SPALTE (Seitenleiste) */
+        .sidebar {
+            width: 32%;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            padding: 40px 30px;
+            box-sizing: border-box;
+        }
+
+        /* Profilbild */
+        .profile-pic-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .profile-pic {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            object-fit: cover;
+        }
+
+        /* Überschriften in der Seitenleiste */
+        .sidebar h2 {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 8px;
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
+
+        /* Listen in der Seitenleiste */
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar li {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .sidebar .icon {
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+
+        /* RECHTE SPALTE (Hauptinhalt) */
+        .main-content {
+            width: 68%;
+            padding: 50px;
+            background-color: var(--secondary-bg);
+            box-sizing: border-box;
+        }
+
+        /* Name und Titel */
+        .header h1 {
+            font-size: 2.8rem;
+            margin: 0;
+            color: var(--primary-bg);
+            letter-spacing: -0.5px;
+        }
+        .header h3 {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        /* Profiltext */
+        .profile-summary {
+            margin-top: 25px;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Sektions-Überschriften rechts */
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-bg);
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 8px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Einträge (Erfahrung/Ausbildung) */
+        .timeline-item {
+            margin-bottom: 25px;
+        }
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+        .timeline-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-bg);
+            margin: 0;
+        }
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        .timeline-subtitle {
+            font-style: italic;
+            color: var(--text-light);
+            margin: 0 0 8px 0;
+            font-size: 0.95rem;
+        }
+        .timeline-content {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .timeline-content ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+
+        /* Tags für Skills/Technologien */
+        .tech-tags {
+            margin-top: 8px;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e2e8f0;
+            color: var(--text-dark);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        /* Responsive Design für kleine Bildschirme */
+        @media (max-width: 768px) {
+            .resume-container {
+                flex-direction: column;
+            }
+            .sidebar, .main-content {
+                width: 100%;
+            }
+            .sidebar {
+                padding: 30px;
+            }
+            .main-content {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="resume-container">
+    
+    <div class="sidebar">
+        <div class="profile-pic-container">
+            <img src="profilbild.jpg" alt="Shahim Quraishy" class="profile-pic" onerror="this.src='https://via.placeholder.com/160/1e3a5f/ffffff?text=SQ'">
+        </div>
+
+        <h2>Kontakt</h2>
+        <ul>
+            <li><span class="icon">📍</span> Hillscheiderstr. 9, 56179 Vallendar</li>
+            <li><span class="icon">📞</span> 01525 8414 768</li>
+            <li><span class="icon">✉️</span> Shahimquraishy@icloud.com</li>
+            <li><span class="icon">💻</span> github.com/ShahimQuraishy</li>
+        </ul>
+
+        <h2>Tech Stack & KI</h2>
+        <ul>
+            <li><strong>KI & Data Science:</strong> LLMs (GPT-4), RAG, Prompt Engineering, Machine Learning, Scikit-Learn</li>
+            <li><strong>Programmierung:</strong> Python, Java, JavaScript (React, Node.js), HTML/CSS</li>
+            <li><strong>Cloud & DevOps:</strong> AWS, Azure, Docker, Git, CI/CD</li>
+            <li><strong>Datenbanken:</strong> SQL, PostgreSQL, Vektordatenbanken (ChromaDB)</li>
+        </ul>
+
+        <h2>Sprachen</h2>
+        <ul>
+            <li>Deutsch (C1-C2)</li>
+            <li>Englisch (B2)</li>
+            <li>Französisch (B1)</li>
+        </ul>
+        
+        <h2>Methodik</h2>
+        <ul>
+            <li>Agiles Projektmanagement (Scrum, Kanban)</li>
+            <li>Systemanalyse & Architektur</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="header">
+            <h1>Shahim Quraishy</h1>
+            <h3>Angehender AI Engineer & Softwareentwickler</h3>
+        </div>
+
+        <div class="profile-summary">
+            Informatikstudent mit fundierter Zertifizierung als Agiler Junior Softwareentwickler und starkem Fokus auf Künstliche Intelligenz. Durch praxisnahe Projekte (wie RAG-Systeme) und berufliche Erfahrung in der Datenbank-Automatisierung bin ich darauf spezialisiert, komplexe Herausforderungen mit modernen Tech-Stacks (Python, Cloud, LLMs) effizient zu lösen.
+        </div>
+
+        <h2 class="section-title">Berufserfahrung</h2>
+
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <p class="timeline-title">Werkstudent Development Business Systems</p>
+                <span class="timeline-date">11/2024 – 05/2025</span>
+            </div>
+            <p class="timeline-subtitle">1&1 Telecommunication SE | Montabaur</p>
+            <div class="timeline-content">
+                <ul>
+                    <li>Einarbeitung in Datenbank-Grundlagen und SQL-Programmierung.</li>
+                    <li>Erstellung von Automatisierungsskripten zur Bereinigung ungenutzter Datenbank-Funktionen.</li>
+                    <li>Anpassung und Optimierung von bestehendem Code im Produktivumfeld.</li>
+                </ul>
+                <div class="tech-tags">
+                    <span class="tag">SQL</span> <span class="tag">Datenbanken</span> <span class="tag">Skripting</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <p class="timeline-title">Werkstudent 1st-Level-Support</p>
+                <span class="timeline-date">05/2023 – 10/2024</span>
+            </div>
+            <p class="timeline-subtitle">RTI Group & United Internet AG | Koblenz</p>
+            <div class="timeline-content">
+                <ul>
+                    <li>Nationaler und internationaler IT-Support (Deutsch & Englisch).</li>
+                    <li>Fehlerdiagnose, Netzwerk-Patch-Arbeiten und System-Integration.</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">IT-Projekte & Gründung</h2>
+
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <p class="timeline-title">RAG-basiertes Wissenssystem für die Pflege</p>
+                <span class="timeline-date">Aktuell</span>
+            </div>
+            <p class="timeline-subtitle">Eigenes Portfolio-Projekt (GitHub)</p>
+            <div class="timeline-content">
+                Entwicklung einer semantischen KI-Suchmaschine zur Verarbeitung unstrukturierter Handbücher (PDFs). Implementierung von Text-Chunking, Vektor-Embeddings und LLM-Prompting, um kontextbezogene Antworten zu generieren und KI-Halluzinationen zu vermeiden.
+                <div class="tech-tags">
+                    <span class="tag">Python</span> <span class="tag">LangChain</span> <span class="tag">ChromaDB</span> <span class="tag">Hugging Face</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <p class="timeline-title">Digitale Assistenzplattform "hilfefuersenioren"</p>
+                <span class="timeline-date">Seit 09/2025</span>
+            </div>
+            <p class="timeline-subtitle">EXIST-Gründungsvorhaben | Universität Koblenz</p>
+            <div class="timeline-content">
+                Konzeption einer AgeTech-Plattform mit Voice-First-Architektur. Vernetzung von Senioren mit ehrenamtlichen Helfern und Dienstleistern über ein intelligentes System.
+                <div class="tech-tags">
+                    <span class="tag">Node.js</span> <span class="tag">React Native</span> <span class="tag">PostgreSQL</span> <span class="tag">Twilio (Voice)</span>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Ausbildung & Weiterbildung</h2>
+
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <p class="timeline-title">Weiterbildung zum agilen Junior Softwareentwickler</p>
+                <span class="timeline-date">01.09.2024 – 30.08.2025</span>
+            </div>
+            <p class="timeline-subtitle">BPU GmbH | Koblenz (Zertifizierter Abschluss)</p>
+            <div class="timeline-content">
+                Intensive Qualifizierung (täglich 2 Stunden). Schwerpunkte: Large Language Models (LLMs), Machine Learning, Python, Java-Programmierung, HTML/CSS und Cloud-Architektur (AWS/Azure).
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-header">
+                <p class="timeline-title">Studiengang Informatik (B.Sc.)</p>
+                <span class="timeline-date">Seit 10/2021</span>
+            </div>
+            <p class="timeline-subtitle">Universität Koblenz</p>
+            <div class="timeline-content">
+                Voraussichtlicher Abschluss: 04.2027. Schwerpunkte u.a.: Systemanalyse, Betriebssysteme, Algorithmen und Datenbanken.
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
