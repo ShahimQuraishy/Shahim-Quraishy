@@ -96,7 +96,7 @@ export class PgDataService implements DataService {
       entfernung_km: number | null;
     }>(query, values);
 
-    return result.rows.map((row) => ({
+    return result.rows.map((row: { id: string; name: string; adresse: string; telefonnummer: string; oeffnungszeiten: string; entfernung_km: number | null }) => ({
       id: row.id,
       name: row.name,
       address: row.adresse,
@@ -254,9 +254,9 @@ export class PgDataService implements DataService {
     );
 
     return {
-      duplicatesMarked: duplicateUpdate.rowCount,
-      staleMarked: staleUpdate.rowCount,
-      oldCallsAnonymized: anonymizeCalls.rowCount
+      duplicatesMarked: duplicateUpdate.rowCount ?? 0,
+      staleMarked: staleUpdate.rowCount ?? 0,
+      oldCallsAnonymized: anonymizeCalls.rowCount ?? 0
     };
   }
 }

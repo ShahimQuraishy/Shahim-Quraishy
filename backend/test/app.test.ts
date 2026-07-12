@@ -56,4 +56,16 @@ describe('API behavior', () => {
     expect(response.body.status).toBe('queued');
     expect(response.body.phoneNumber).toBe('+49261123456');
   });
+
+  it('runs maintenance endpoint with api key', async () => {
+    const app = createApp(new InMemoryDataService(), apiKey);
+    const response = await request(app).post('/api/maintenance/run').set('x-api-key', apiKey).send({});
+
+    expect(response.status).toBe(202);
+    expect(response.body).toEqual({
+      duplicatesMarked: 0,
+      staleMarked: 0,
+      oldCallsAnonymized: 0
+    });
+  });
 });
