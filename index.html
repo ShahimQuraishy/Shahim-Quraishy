@@ -356,6 +356,116 @@
             background-position:100% 100%;
         }
 
+
+
+        /* CITY DATABASE */
+        .city-db-section {
+            margin-bottom:56px;
+            background:#fff;
+            border:1px solid var(--border);
+            border-radius:18px;
+            padding:34px 26px;
+            box-shadow:0 12px 30px rgba(28,43,74,0.08);
+        }
+        .city-db-section h2 {
+            font-family:'Playfair Display',serif;
+            color:var(--navy);
+            margin-bottom:8px;
+            letter-spacing:0.3px;
+        }
+        .city-db-section p {
+            color:#475061;
+            margin-bottom:18px;
+            line-height:1.8;
+        }
+        .city-db-controls {
+            display:flex;
+            align-items:center;
+            gap:12px;
+            margin-bottom:14px;
+        }
+        .city-db-controls label { font-weight:700; color:var(--navy); }
+        .city-db-controls select {
+            min-width:220px;
+            border:1px solid #cfd8e8;
+            border-radius:10px;
+            padding:10px 12px;
+            font-size:0.95rem;
+            background:#fff;
+            color:#1c2b4a;
+        }
+        .city-db-summary {
+            font-size:0.92rem;
+            color:#2c3e6a;
+            margin-bottom:14px;
+            font-weight:600;
+        }
+        .city-db-table-wrap { overflow-x:auto; margin-bottom:20px; }
+        .city-db-table {
+            width:100%;
+            border-collapse:collapse;
+            font-size:0.92rem;
+        }
+        .city-db-table th,
+        .city-db-table td {
+            border:1px solid #e6ebf5;
+            padding:10px 12px;
+            text-align:left;
+            vertical-align:top;
+        }
+        .city-db-table th {
+            background:#f4f7fc;
+            color:#1f3158;
+            font-weight:700;
+        }
+        .city-db-import {
+            border:1px solid #e6ebf5;
+            border-radius:12px;
+            padding:16px;
+            margin-bottom:18px;
+            background:#fafbfd;
+        }
+        .city-db-import h3,
+        .city-db-quality h3 {
+            color:#1c2b4a;
+            margin-bottom:10px;
+            font-size:1rem;
+        }
+        .city-db-import textarea {
+            width:100%;
+            min-height:120px;
+            border:1px solid #cfd8e8;
+            border-radius:10px;
+            padding:12px;
+            font-size:0.9rem;
+            resize:vertical;
+            margin-bottom:12px;
+            font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
+        }
+        .city-db-import .btn {
+            border:none;
+            cursor:pointer;
+            padding:12px 28px;
+            font-size:0.92rem;
+        }
+        .city-db-import-result {
+            margin-top:10px;
+            font-size:0.9rem;
+            color:#2c3e6a;
+            font-weight:600;
+        }
+        .city-db-quality {
+            border:1px solid #e6ebf5;
+            border-radius:12px;
+            padding:16px;
+            background:#fff;
+        }
+        .city-db-quality ul {
+            padding-left:18px;
+            margin:0;
+            color:#2f3545;
+        }
+        .city-db-quality li { margin-bottom:7px; }
         /* SCROLL REVEAL */
         .reveal {
             opacity:0; transform:translateY(30px);
@@ -386,6 +496,8 @@
             .gallery-item.floorplan { grid-column:1; }
             .contact-grid { flex-direction:column; align-items:center; }
             .contact-card { width:100%; justify-content:center; }
+            .city-db-controls { flex-direction:column; align-items:flex-start; }
+            .city-db-controls select { width:100%; }
         }
     </style>
 </head>
@@ -485,6 +597,45 @@
         <a href="tel:0767607676" class="btn">📲 تماس مستقیم</a>
     </section>
 
+
+    <section class="city-db-section reveal" id="city-db" dir="ltr">
+        <h2>Stadtbasierte Kontaktdatenbank</h2>
+        <p>Wähle zuerst eine Stadt. Alle Datensätze werden standardisiert gespeichert und je Stadt getrennt angezeigt.</p>
+
+        <div class="city-db-controls">
+            <label for="cityFilter">Stadt auswählen:</label>
+            <select id="cityFilter" aria-label="Stadt auswählen"></select>
+        </div>
+
+        <div id="citySummary" class="city-db-summary"></div>
+
+        <div class="city-db-table-wrap">
+            <table class="city-db-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Telefon</th>
+                        <th>Adresse</th>
+                        <th>Stadt</th>
+                    </tr>
+                </thead>
+                <tbody id="cityRecordsBody"></tbody>
+            </table>
+        </div>
+
+        <div class="city-db-import">
+            <h3>KI-Import (JSON)</h3>
+            <textarea id="aiImportInput" placeholder='[{"name":"Max Mustermann","phone":"+49 261 123456","address":"Löhrstraße 12, Koblenz","city":"Coblenz"}]'></textarea>
+            <button id="aiImportBtn" class="btn" type="button">KI-Daten importieren</button>
+            <p id="aiImportResult" class="city-db-import-result" aria-live="polite"></p>
+        </div>
+
+        <div class="city-db-quality">
+            <h3>Datenqualitätsprüfung</h3>
+            <ul id="qualityChecks"></ul>
+        </div>
+    </section>
+
 </div>
 
 <footer>
@@ -500,12 +651,14 @@
         p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*18+10}s;animation-delay:${Math.random()*12}s;`;
         pc.appendChild(p);
     }
+
     const io=new IntersectionObserver((entries)=>{
         entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} });
     },{threshold:0.1});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
     const style=document.createElement('style');
-    style.textContent=`@keyframes rippleAnim{to{transform:scale(40);opacity:0}}`;
+    style.textContent='@keyframes rippleAnim{to{transform:scale(40);opacity:0}}';
     document.head.appendChild(style);
     document.querySelectorAll('.btn').forEach(btn=>{
         btn.addEventListener('click',function(e){
@@ -514,6 +667,185 @@
             btn.appendChild(r);setTimeout(()=>r.remove(),700);
         });
     });
+
+    const cityCatalog=[
+        {id:'koblenz',name:'Koblenz',aliases:['koblenz','coblenz']},
+        {id:'vallendar',name:'Vallendar',aliases:['vallendar']},
+        {id:'bendorf',name:'Bendorf',aliases:['bendorf']}
+    ];
+
+    const cityNameById=Object.fromEntries(cityCatalog.map(city=>[city.id,city.name]));
+    const cityAliasToId={};
+    cityCatalog.forEach(city=>{
+        cityAliasToId[city.name.toLowerCase()]=city.id;
+        city.aliases.forEach(alias=>{ cityAliasToId[alias.toLowerCase()]=city.id; });
+    });
+
+    const initialRawRecords=[
+        {name:'Hotel am Rhein',phone:'+49 261 123456',address:'Rheinstraße 10, Koblenz',city:'Koblenz'},
+        {name:'Bäckerei Altstadt',phone:'+49 261 999111',address:'Münzplatz 3, Coblenz',city:'Coblenz'},
+        {name:'Apotheke Markt',phone:'+49 261 888222',address:'Hellenstraße 2, Vallendar',city:''},
+        {name:'City Praxis',phone:'+49 2622 456789',address:'Hauptstraße 7, Bendorf',city:'Bendorf'}
+    ];
+
+    const cityFilter=document.getElementById('cityFilter');
+    const citySummary=document.getElementById('citySummary');
+    const cityRecordsBody=document.getElementById('cityRecordsBody');
+    const qualityChecks=document.getElementById('qualityChecks');
+    const aiImportInput=document.getElementById('aiImportInput');
+    const aiImportBtn=document.getElementById('aiImportBtn');
+    const aiImportResult=document.getElementById('aiImportResult');
+
+    let records=initialRawRecords.map(standardizeRecord);
+
+    function normalizeText(value){
+        return String(value||'').trim().replace(/\s+/g,' ');
+    }
+
+    function normalizePhone(value){
+        return normalizeText(value).replace(/[\s\-()]/g,'');
+    }
+
+    function normalizeCityToId(rawCity,rawAddress=''){
+        const cityCandidate=normalizeText(rawCity).toLowerCase();
+        if(cityCandidate && cityAliasToId[cityCandidate]) return cityAliasToId[cityCandidate];
+
+        const addressNormalized=normalizeText(rawAddress).toLowerCase();
+        if(!addressNormalized) return '';
+        for(const [alias,id] of Object.entries(cityAliasToId)){
+            if(addressNormalized.includes(alias)) return id;
+        }
+        return '';
+    }
+
+    function standardizeRecord(rawRecord){
+        const name=normalizeText(rawRecord.name);
+        const phone=normalizeText(rawRecord.phone);
+        const address=normalizeText(rawRecord.address);
+        const cityId=normalizeCityToId(rawRecord.city,address);
+        return {
+            id:rawRecord.id||`rec-${Date.now()}-${Math.random().toString(16).slice(2,8)}`,
+            name,
+            phone,
+            address,
+            cityId,
+            cityName:cityNameById[cityId]||''
+        };
+    }
+
+    function populateCityFilter(){
+        cityFilter.innerHTML='';
+        cityCatalog.forEach(city=>{
+            const option=document.createElement('option');
+            option.value=city.id;
+            option.textContent=city.name;
+            cityFilter.appendChild(option);
+        });
+    }
+
+    function renderRecords(){
+        const selectedCityId=cityFilter.value;
+        const filtered=records.filter(record=>record.cityId===selectedCityId);
+
+        cityRecordsBody.innerHTML='';
+        if(!filtered.length){
+            const tr=document.createElement('tr');
+            tr.innerHTML='<td colspan="4">Keine Datensätze für diese Stadt vorhanden.</td>';
+            cityRecordsBody.appendChild(tr);
+        }else{
+            filtered.forEach(record=>{
+                const tr=document.createElement('tr');
+                tr.innerHTML=`<td>${escapeHtml(record.name)}</td><td>${escapeHtml(record.phone)}</td><td>${escapeHtml(record.address)}</td><td>${escapeHtml(record.cityName)}</td>`;
+                cityRecordsBody.appendChild(tr);
+            });
+        }
+
+        citySummary.textContent=`${filtered.length} Einträge in ${cityNameById[selectedCityId]||'Unbekannt'} · Gesamt: ${records.length}`;
+    }
+
+    function buildQualityReport(){
+        const incomplete=records.filter(record=>!record.name||!record.phone||!record.address||!record.cityId);
+        const invalidCity=records.filter(record=>record.cityId&&!cityNameById[record.cityId]);
+        const wrongCity=records.filter(record=>{
+            const inferredFromAddress=normalizeCityToId('',record.address);
+            return inferredFromAddress && record.cityId && inferredFromAddress!==record.cityId;
+        });
+
+        const duplicateMap=new Map();
+        records.forEach(record=>{
+            const key=[normalizeText(record.name).toLowerCase(),normalizePhone(record.phone),normalizeText(record.address).toLowerCase(),record.cityId||''].join('|');
+            duplicateMap.set(key,(duplicateMap.get(key)||0)+1);
+        });
+        const duplicateCount=[...duplicateMap.values()].filter(count=>count>1).reduce((acc,count)=>acc+count-1,0);
+
+        qualityChecks.innerHTML='';
+        const qualityItems=[
+            `Dubletten: ${duplicateCount}`,
+            `Falsche/ungültige Stadtzuordnung: ${invalidCity.length + wrongCity.length}`,
+            `Unvollständige Datensätze: ${incomplete.length}`
+        ];
+
+        qualityItems.forEach(item=>{
+            const li=document.createElement('li');
+            li.textContent=item;
+            qualityChecks.appendChild(li);
+        });
+    }
+
+    function importAiRecords(rawPayload){
+        const accepted=[];
+        const rejected=[];
+
+        rawPayload.forEach(rawRecord=>{
+            const standardized=standardizeRecord(rawRecord);
+            const isComplete=standardized.name&&standardized.phone&&standardized.address&&standardized.cityId;
+            if(isComplete){
+                accepted.push(standardized);
+            }else{
+                rejected.push(rawRecord);
+            }
+        });
+
+        records=[...records,...accepted];
+        return {accepted,rejected};
+    }
+
+    function escapeHtml(value){
+        return String(value)
+            .replaceAll('&','&amp;')
+            .replaceAll('<','&lt;')
+            .replaceAll('>','&gt;')
+            .replaceAll('"','&quot;')
+            .replaceAll("'",'&#39;');
+    }
+
+    cityFilter.addEventListener('change',renderRecords);
+
+    aiImportBtn.addEventListener('click',()=>{
+        const rawText=aiImportInput.value.trim();
+        if(!rawText){
+            aiImportResult.textContent='Bitte JSON-Daten für den KI-Import einfügen.';
+            return;
+        }
+
+        let payload;
+        try{
+            payload=JSON.parse(rawText);
+            if(!Array.isArray(payload)) throw new Error('JSON must be an array');
+        }catch(_error){
+            aiImportResult.textContent='Ungültiges JSON. Erwartet wird ein Array von Datensätzen.';
+            return;
+        }
+
+        const {accepted,rejected}=importAiRecords(payload);
+        renderRecords();
+        buildQualityReport();
+        aiImportResult.textContent=`Import abgeschlossen: ${accepted.length} übernommen, ${rejected.length} abgelehnt (fehlende/falsche Pflichtdaten oder Stadt).`;
+    });
+
+    populateCityFilter();
+    renderRecords();
+    buildQualityReport();
 </script>
 </body>
 </html>
